@@ -1,0 +1,12 @@
+{
+  "seed": 20261121,
+  "windows_kms": [1500, 2500, 3500, 4500, 5500, 6000],
+  "parent": "40 clean JWST including the primary snr>=15 subset of 22; SDSS final accepted 185. Keep unavailable measurements in the ledger.",
+  "estimand": "central second moment of signed observed broad H-alpha residual within each symmetric velocity window about the archived fitted H-alpha center. Integrate actual pixel overlap; no zero clipping, narrow or absorption infill, or subtraction of instrumental variance from a finite window.",
+  "background": "Linear inverse-variance sidebands [-11000,-6500] and [8700,11000] km/s, exclude [O I] 6365 +/-450, at least four valid pixels per side. Simultaneous broad two-Gaussian plus narrow H-alpha and [N II] in |v|<=4500, retain signed data after subtracting narrow components. Also compare raw total line without deblending.",
+  "coverage": "each window requires at least 98% good native pixel overlap; variance and total flux positive. List counts for every window and use identical objects for paired differences.",
+  "injections": "Before measuring sample moments: same response, error array and sideband block noise on each source grid. Refit continuum and narrow lines. Compare Gaussian and variable-wing mixture (random 5-35% area in a ~3x wider component), including absorption in a subset. Compare with known attenuated, instrument-convolved broad profile in each finite window. Report median bias, 68th percentile absolute log error and fraction usable by group/window/profile. Noise scale cannot fall below pipeline scale. Record how much injected full-width scatter is compressed by truncation.",
+  "recovery_gate": "Descriptive reliable window per primary group: both shapes each have >=0.85 recovered fraction, absolute median log bias <=0.03 dex, and 68th percentile absolute log error <=0.08 dex. These are working precision thresholds, not significance levels.",
+  "statistics": "OLS log10(sigma_V) on archived broad log10 LHa within survey. Report residual SD with ddof=1, by-source paired bootstrap 95% intervals and contrasts to 2500 km/s. Signed mock residual scatter at fixed input L calibrates bias and noise; no intrinsic-scatter claim from raw subtraction.",
+  "contrast": "Additional population injection: compare recovered vs true scatter and paired growth for no intrinsic wing diversity versus variable wings, on the same selected sample. SDSS and JWST separately conditioned, no redshift-evolution inference."
+}

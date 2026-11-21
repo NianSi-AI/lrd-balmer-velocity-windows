@@ -1,0 +1,7 @@
+{
+ "purpose": "Follow-up after inspecting primary data, before supplementary injections or measurements. Retain primary results unchanged.",
+ "windows_kms": [1500,2500,3500,4500],
+ "edge_spectra": "Keep original sidebands whenever possible. If red anchors missing, supplement at +5600..+6300 km/s; if blue missing, -6300..-5400. Separate flags and calibration. Quantify all parent counts.",
+ "null": "For each object set intrinsic core FWHM equal to its archived single Gaussian scale, preserving the measured correlation with line luminosity, source SNR and sampling. Inject a Gaussian, or add 5-35% flux in wings of triple core dispersion. Refit on empirical sideband block noise. Conditional template diagnostic only. Gaussian+absorption subset as in primary injection. At least 60 trials per high-SNR JWST source, 12 per SDSS source.",
+ "full_width_reference": "Compute a noiseless +/-50000 km/s reference after instrumental convolution and absorption. Quantify how fixed windows compress natural scatter."
+}

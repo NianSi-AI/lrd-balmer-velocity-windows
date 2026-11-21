@@ -1,0 +1,23 @@
+{
+  "RUBIES-EGS-42046": {
+    "z_OIII": 5.276293693911533,
+    "grating": "G395M",
+    "FWHM_sg_v3_kms": 3413.678971451193,
+    "delta_sigma_match_kms": 89.2240780120963,
+    "ncombine": 6
+  },
+  "RUBIES-EGS-55604": {
+    "z_OIII": 6.983442939806638,
+    "grating": "G395M",
+    "FWHM_sg_v3_kms": 3186.648471358834,
+    "delta_sigma_match_kms": 61.44140645148448,
+    "ncombine": 3
+  },
+  "JADES-GN-68797": {
+    "z_OIII": 5.0391496438312515,
+    "grating": "G395H",
+    "FWHM_sg_v3_kms": 3111.916732108062,
+    "delta_sigma_match_kms": 41.52806845771262,
+    "ncombine": 3
+  }
+}

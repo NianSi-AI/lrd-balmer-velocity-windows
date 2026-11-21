@@ -1,0 +1,431 @@
+\documentclass[twocolumn]{aastex631}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+\input{numbers.tex}
+
+\newcommand{\Ha}{\ensuremath{\mathrm{H}\alpha}}
+\newcommand{\Hb}{\ensuremath{\mathrm{H}\beta}}
+\newcommand{\OIII}{\ensuremath{[\mathrm{O\,\textsc{iii}}]}}
+\newcommand{\NII}{\ensuremath{[\mathrm{N\,\textsc{ii}}]}}
+\newcommand{\SII}{\ensuremath{[\mathrm{S\,\textsc{ii}}]}}
+\newcommand{\OI}{\ensuremath{[\mathrm{O\,\textsc{i}}]}}
+\newcommand{\HeI}{\ensuremath{\mathrm{He\,\textsc{i}}}}
+\newcommand{\kms}{\ensuremath{\mathrm{km\,s^{-1}}}}
+\newcommand{\LHa}{\ensuremath{L_{\mathrm{H}\alpha}}}
+\newcommand{\FWHM}{\ensuremath{\mathrm{FWHM}}}
+\newcommand{\FWHMsg}{\ensuremath{\mathrm{FWHM}_{\mathrm{sg}}}}
+\newcommand{\fvir}{\ensuremath{f_{\mathrm{vir}}}}
+\newcommand{\MBH}{\ensuremath{M_{\mathrm{BH}}}}
+\newcommand{\sigV}{\ensuremath{\sigma(V)}}
+
+\shorttitle{Velocity-Window Dependence of the LRD \Ha\ Relation}
+\shortauthors{Draft Version 3.1}
+
+\begin{document}
+
+\title{Velocity-Window Dependence of the Broad \texorpdfstring{\Ha}{H-alpha} Width--Luminosity Relation in Little Red Dots}
+
+\author{[Author List To Be Inserted]}
+\affiliation{[Affiliation To Be Inserted]}
+
+\begin{abstract}
+Little red dots (LRDs) are compact high-redshift sources whose broad \Ha\ lines span a remarkably narrow range of integrated widths at fixed line luminosity. Does this regularity hold once outer-wing photons are included? Holding the objects, width definition, and broad-\Ha\ luminosities fixed, we measure the finite-window line dispersion \sigV\ across symmetric velocity half-windows from $V = 1500$ to $4500~\kms$ in JWST/NIRSpec spectra and apply the same measurement to Sloan Digital Sky Survey (SDSS) Type-1 active galactic nuclei (AGN). At fixed broad-\Ha\ luminosity, the observed scatter in $\log_{10}\sigV$ among the same $\PTJWSTPresetN$ high signal-to-noise LRDs rises from $\PTJWSTPresetSTwoFiveThreeDec$ to $\PTJWSTPresetSFourFiveThreeDec$~dex as $V$ expands from $2500$ to $4500~\kms$, a paired increase of $\PTJWSTPresetDeltaThreeDec$~dex (95\% source-bootstrap interval $\PTJWSTPresetDeltaLoThreeDec$--$\PTJWSTPresetDeltaHiThreeDec$~dex; adding $\JWSTEdgeFallbackN$ spectrum-edge objects gives a similar increase). Source-conditioned injections on the same $\PTJWSTPresetN$ objects show that both Gaussian and variable-wing profiles accommodate this increase, leaving intrinsic wing diversity, finite-window truncation, and wing noise unseparated. In the clearest dual-line spectrum, RUBIES-EGS-55604, \Hb\ grows stronger relative to \Ha\ from line center to wing under two treatments of the same combined grating spectrum. Within the integrated-width context of JWST, SDSS, and $\EuclidMainN$ Euclid DR1 AGN, the tight \Ha\ relation depends on the velocities admitted to the finite-window line dispersion, while Balmer lines can weight those velocities differently within a single source.
+\end{abstract}
+
+\keywords{Active galactic nuclei (16) --- Quasars (1319) --- Emission line galaxies (459) --- High-redshift galaxies (734) --- Supermassive black holes (1663)}
+
+\section{Introduction}
+\label{sec:intro}
+
+JWST spectroscopy has revealed an abundant population of compact rest-optical sources at $z \gtrsim 3$, termed ``little red dots'' (LRDs), with prominent broad Balmer emission lines \citep{Matthee2024,Greene2024} and characteristic V-shaped continua inflecting near the Balmer limit \citep{Setton2025Vshape}. In several of the brightest examples with simultaneous \Ha\ and \Hb\ grating coverage, \citet[][their Section~V.3.1 and Figure~9]{Chen2026} further showed that the $F(\Ha)/F(\Hb)$ flux ratio decreases substantially from line center toward the wings, indicating that emission or radiative-transfer conditions vary across an individual broad-line profile.
+
+How flux is distributed across velocity directly governs the physical interpretation of broad-line widths. In reverberation-mapped and single-epoch active galactic nuclei (AGN), black hole mass estimates follow the virial product $\MBH = \fvir\, R\, \Delta V^2 / G$ \citep{Peterson2004,GreeneHo2005,Bentz2013}, where the calibration factor \fvir\ depends on whether $\Delta V$ is parameterized by full width at half maximum (\FWHM) or by a flux-weighted line dispersion \citep{Collin2006}. Across AGN populations, the dispersion of broad-line widths at fixed luminosity constrains broad-line geometry and the dynamical information carried by single-epoch widths \citep{Fine2008,Croom2011,Assef2012}, while optical-depth effects or frequency redistribution by scattering can modify emergent line shapes relative to bulk gas velocities \citep{OsterbrockFerland2006,Laor2006}.
+
+\citet[][hereafter Paper~I]{Wang2026} found that JWST LRDs follow an unusually tight broad-\Ha\ width--luminosity relation, with a measurement-error-corrected intrinsic scatter of $0.054$~dex at fixed \LHa---less than half that of local SDSS quasars refitted with the same pipeline and independently reproduced using the spectroscopic compilation of \citet{BaccusXu2026}. Paper~I (its Sections~II.2 and~III.2) compared several integrated width definitions, finding similarly small scatter for single-Gaussian \FWHM\ (\FWHMsg), interpercentile width ($W_{50}$), and Lorentzian or exponential fits, alongside larger scatter for two-Gaussian composite \FWHM. Those comparisons change the width definition. Here we hold the objects, the width definition---the finite-window line dispersion \sigV---and the broad-\Ha\ luminosities fixed, and vary only the velocity range admitted to the measurement, asking how tightly LRD widths remain clustered once wing photons are included.
+
+We first measure how the observed \Ha\ width--luminosity scatter responds as the velocity half-window expands from $V = 1500$ to $4500~\kms$ in JWST LRDs and SDSS Type-1 AGN, calibrated by empirical-noise injections on the same targets (Section~\ref{sec:res_moments}; Figure~\ref{fig:moments}). We then examine velocity-binned $F(\Hb)/F(\Ha)$ ratios under two treatments of the same combined grating spectra in three high-weight dual-line LRDs and relate them to an archived two-line template measurement (Section~\ref{sec:res_balmer}; Figure~\ref{fig:balmer}). Finally, we place the integrated \Ha\ widths of JWST LRDs alongside SDSS and an independently selected Euclid DR1 broad-\Ha\ sample (Section~\ref{sec:res_context}; Figure~\ref{fig:three_survey}), before discussing implications for line-width modeling in Section~\ref{sec:discussion}.
+
+\section{Observations and Samples}
+\label{sec:samples}
+
+Table~\ref{tab:samples} summarizes all spectroscopic samples and subsets used in this work. Because the three surveys span disjoint combinations of redshift, spectral resolution, and continuum luminosity, each serves a distinct empirical role rather than forming a fixed-luminosity evolutionary sequence.
+
+\begin{deluxetable*}{lcccp{4.1cm}}
+\tabletypesize{\footnotesize}
+\tabcolsep=3.8pt
+\tablewidth{0pt}
+\tablecaption{Samples and Measurements\label{tab:samples}}
+\tablehead{
+\colhead{Survey / Subset} &
+\colhead{$N$} &
+\colhead{Redshift} &
+\colhead{Measured Quantities} &
+\colhead{Selection and Analytical Role}
+}
+\startdata
+\cutinhead{JWST/NIRSpec Little Red Dots (Archival Grating Parent: $N = \JWSTGratingParentN$)}
+Continuum-clean baseline &
+  $\JWSTCleanN$\tablenotemark{a} &
+  $\JWSTCleanZMin$--$\JWSTCleanZMax$ &
+  \Ha\ \FWHMsg &
+  Continuum-verified integrated \Ha\ width--luminosity baseline \\
+Primary window sample &
+  $\PTJWSTPresetN$\tablenotemark{b} &
+  $\JWSTPresetZMin$--$\JWSTPresetZMax$ &
+  \Ha\ \sigV, \FWHMsg &
+  Broad \Ha\ $\mathrm{S/N} \ge 15$ with both default continuum sidebands \\
+Supplementary window sample &
+  $\PTJWSTFullN$\tablenotemark{b} &
+  $\JWSTHighSNRZMin$--$\JWSTHighSNRZMax$ &
+  \Ha\ \sigV, \FWHMsg &
+  Adds $\JWSTEdgeFallbackN$ spectrum-edge sources via fallback red continuum sideband \\
+Same-grating Balmer sample &
+  $\POneTmplAllThirtyThreeN$ (top $\POneTmplTopThreeN$)\tablenotemark{c} &
+  $\JWSTTwoLineZMin$--$\JWSTTwoLineZMax$ &
+  \Hb/\Ha\ $R(v)$, template &
+  Simultaneous \Ha\ and \Hb\ on same combined grating spectrum \\
+\cutinhead{Comparison and Population-Context Surveys}
+SDSS DR7 Type-1 AGN &
+  $\SDSSCleanN$ ($\PTSDSSPresetNFourFive$--$\PTSDSSPresetNOneFive$)\tablenotemark{d} &
+  $\SDSSCleanZMin$--$\SDSSCleanZMax$ &
+  \Ha\ \sigV, \FWHMsg &
+  Same-window empirical reference in local broad-line AGN \\
+Euclid DR1 primary sample &
+  $\EuclidMainN$\tablenotemark{e} &
+  $\EuclidMainZMin$--$\EuclidMainZMax$ &
+  \Ha\ \FWHMsg, $\sigma_w$ &
+  Independently selected intermediate-$z$ integrated-width reference \\
+\enddata
+\tablenotetext{a}{Subset of the $\JWSTGratingParentN$ archival NIRSpec grating LRDs ($\JWSTGratingParentPaperOneOverlapN$ in Paper~I) passing local continuum quality control ($\JWSTCleanPaperOneOverlapN$ in Paper~I).}
+\tablenotetext{b}{The $\PTJWSTFullN$-source high-S/N set ($\mathrm{S/N} \ge 15$; $\JWSTHighSNRPaperOneOverlapN$ in Paper~I) includes all $\PTJWSTPresetN$ primary default-sideband sources ($\JWSTPresetPaperOneOverlapN$ in Paper~I) plus two detector-edge objects.}
+\tablenotetext{c}{Selected directly from the $\JWSTGratingParentN$ grating sources ($\JWSTTwoLinePaperOneOverlapN$ in Paper~I), comprising $\JWSTTwoLineInCleanN$ of the $\JWSTCleanN$ continuum-clean objects and $\JWSTTwoLineOutCleanN$ objects outside that subset; velocity-binned profiles are examined in the $\POneTmplTopThreeN$ highest-weight objects.}
+\tablenotetext{d}{From $\SDSSSpectra$ spectra cross-matched to \citet{Shen2011}, $\SDSSCleanN$ pass single-Gaussian quality control and $\PTSDSSPresetNFourFive$--$\PTSDSSPresetNOneFive$ yield valid moments across $V = 1500$--$4500~\kms$ under default sidebands ($\PTSDSSFullNFourFive$--$\PTSDSSFullNOneFive$ with supplemented sidebands; Table~\ref{tab:moments}).}
+\tablenotetext{e}{Selected from $\EuclidTargets$ Euclid DR1 candidates at $19.0 < H_{\mathrm{aper}} < \EuclidHLimit$ with usable MER photometry prior to inspecting broad-line widths.}
+\end{deluxetable*}
+
+\emph{JWST/NIRSpec LRDs.}---We start from an archival parent compilation of $\JWSTGratingParentN$ deduplicated LRDs observed with JWST/NIRSpec medium- or high-resolution gratings ($R \sim 1000$--$2700$; \citealt{Jakobsen2022,deGraaffLSF2024}). Reduced 1D spectra were obtained from the \href{https://dawn-cph.github.io/dja/}{DAWN JWST Archive}. They were extracted with \texttt{msaexp} \citep{msaexp} and include public observations from the RUBIES survey \citep{DJAdeGraaff2024}. Our target list combines published spectroscopic LRD compilations, primarily the catalogs of \citet{BaccusXu2026} and \citet[][ATLAS~I, Table~1]{Yanagisawa2026} alongside \citet{Kocevski2025}, \citet{Taylor2025}, and \citet{Hviding2025}. We retain a source if any contributing catalog classifies it as an LRD. Overlap counts with Paper~I refer to its full JWST spectroscopic sample, including its comparison objects. For example, CEERS-1244, classified as a comparison object in Paper~I, is listed as an LRD in Table~1 of \citet{Yue2024} and enters our primary sample. The $\JWSTGratingParentN$ grating sources ($\JWSTGratingParentPaperOneOverlapN$ in common with Paper~I) enter two analyses:
+\begin{enumerate}
+\item \emph{\Ha\ width--luminosity and window branch.}---Of the $\JWSTGratingParentN$ grating sources, $\JWSTCleanN$ ($z = \JWSTCleanZMin$--$\JWSTCleanZMax$, median $\JWSTCleanZMed$) have verified local continuum measurements used for the integrated-width comparison ($\JWSTCleanPaperOneOverlapN$ shared with Paper~I; $\JWSTCleanBXProvN$ and $\JWSTCleanAtlasProvN$ listed in \citealt{BaccusXu2026} and \citealt{Yanagisawa2026}, respectively). We measure the integrated comparison width \FWHMsg\ with a single Gaussian (median $\JWSTCleanMedFWHM~\kms$). For the luminosity and broad-line S/N, we use the total broad flux of the fitted profile. We adopt a symmetric exponential or a two-Gaussian profile when it has the lowest Bayesian information criterion (BIC) and improves on the single Gaussian by $\Delta\mathrm{BIC}>6$. Otherwise we use the single Gaussian. Both broad components contribute to the flux in a two-Gaussian fit. Each source retains this luminosity at every window width. Within these $\JWSTCleanN$ objects, $\JWSTHighSNRN$ meet our broad-\Ha\ threshold $\mathrm{S/N} \ge 15$ ($z = \JWSTHighSNRZMin$--$\JWSTHighSNRZMax$, median $\FWHMsg = \JWSTHighSNRMedFWHM~\kms$; $\JWSTHighSNRPaperOneOverlapN$ in Paper~I). Both default continuum sidebands are available for $\PTJWSTPresetN$ of these $\JWSTHighSNRN$ objects ($\JWSTPresetPaperOneOverlapN$ in Paper~I), forming our \emph{primary} window sample; adding $\JWSTEdgeFallbackN$ detector-edge sources (RUBIES-EGS-50052 and JADES-GS-38562) via a fallback red continuum anchor defines the $\PTJWSTFullN$-source \emph{supplementary} sample (Appendix~\ref{app:edge}).
+\item \emph{Same-grating Balmer branch.}---Separately, $\POneTmplAllThirtyThreeN$ of the $\JWSTGratingParentN$ grating sources ($z = \JWSTTwoLineZMin$--$\JWSTTwoLineZMax$; $\JWSTTwoLinePaperOneOverlapN$ in Paper~I) cover \Ha\ and \Hb\ simultaneously on the same combined grating spectrum, comprising $\JWSTTwoLineInCleanN$ of the $\JWSTCleanN$ continuum-clean sources and $\JWSTTwoLineOutCleanN$ objects outside that subset (RUBIES-UDS-149298, Skyfire-1090, and RUBIES-EGS-42803). Velocity-binned Balmer ratios are analyzed in the $\POneTmplTopThreeN$ objects carrying the highest weight in the archived two-line template: RUBIES-EGS-55604, RUBIES-EGS-42046, and JADES-GN-68797.
+\end{enumerate}
+
+\emph{SDSS DR7 Type-1 AGN.}---As an empirical low-redshift reference processed through the identical pixel-level window operator, we use $\SDSSCleanN$ quality-controlled broad-line AGN at $z = \SDSSCleanZMin$--$\SDSSCleanZMax$ (median $\SDSSCleanZMed$, median $\FWHMsg = \SDSSCleanMedFWHM~\kms$) refitted from $\SDSSSpectra$ SDSS DR7 spectra cross-matched to \citet{Shen2011}. For SDSS we convert the cataloged broad-\Ha\ luminosities of \citet{Shen2011} to our adopted cosmology ($\log_{10}(\LHa/\mathrm{erg\,s^{-1}}) = \SDSSCleanLHaMin$--$\SDSSCleanLHaMax$, median $\SDSSCleanLHaMed$). Default continuum sidebands yield $\PTSDSSPresetNFourFive$--$\PTSDSSPresetNOneFive$ valid spectra across $V = 1500$--$4500~\kms$ ($\PTSDSSFullNFourFive$--$\PTSDSSFullNOneFive$ with supplemented sidebands; Table~\ref{tab:moments}).
+
+\emph{Euclid DR1 Primary Sample and Cosmology.}---To provide an independently selected intermediate-redshift population reference, we use $\EuclidMainN$ broad-\Ha\ AGN at $z = \EuclidMainZMin$--$\EuclidMainZMax$ (median $\EuclidMainZMed$, median $\FWHMsg = \EuclidMainMedFWHM~\kms$, $\log_{10}(\LHa/\mathrm{erg\,s^{-1}}) = \EuclidMainLHaMin$--$\EuclidMainLHaMax$) measured from Euclid DR1 NISP slitless spectroscopy \citep{EuclidAussel2026,EuclidLeBrun2026,EuclidFumana2026}. We selected the parent list of $\EuclidTargets$ candidates at $19.0 < H_{\mathrm{aper}} < \EuclidHLimit$ with usable MER photometry before inspecting the broad-line measurements (distinct from photometric LRD selections in Euclid Quick Data Release~1; \citealt{EuclidBisigello2025}). Because NISP slitless resolution and per-pixel S/N do not support native-pixel wing moments out to $\pm 4500~\kms$, Euclid enters solely through integrated-width statistics. Across the shared luminosity band $\log_{10}(\LHa/\mathrm{erg\,s^{-1}}) = 43.0$--$43.7$, SDSS and Euclid contribute $\SDSSBridgeN$ and $\EuclidBridgeN$ objects whereas JWST contributes only $\JWSTBridgeN$, and the brightest JWST overlap continuum ($\log_{10}(\lambda L_\lambda/\mathrm{erg\,s^{-1}}) = \JWSTBridgeCMax$) lies $\BridgeJWSTEuclidContinuumGap$~dex below the faintest Euclid overlap source ($\EuclidBridgeCMin$). Throughout this work, we use luminosity distances from the \texttt{Planck18} cosmology implemented in Astropy ($H_0 = 67.66~\kms\,\mathrm{Mpc}^{-1}$, $\Omega_{\mathrm{m},0} = 0.30966$; \citealt{Planck2020}).
+
+\section{Measurements and Analysis}
+\label{sec:methods}
+
+\subsection{Finite-Window Line Dispersion}
+\label{sec:methods_moments}
+
+For each JWST and SDSS spectrum in the \Ha\ moment scan, rest-frame velocity $v$ is referenced to the fitted broad-\Ha\ center. A linear inverse-variance continuum is fitted to default two-sided sidebands ($[-11000, -6500]$ and $[+8700, +11000]~\kms$, masking pixels within $450~\kms$ of rest-frame $\OI\,\lambda 6365$ and avoiding \SII). Within $|v| \le 4500~\kms$, a two-Gaussian broad model plus narrow \Ha\ and $\NII\,\lambda\lambda 6548,6583$ are fitted simultaneously solely to subtract the narrow lines. We retain the signed narrow-subtracted residual flux $f(v)$ on the native pixel grid---preserving Balmer absorption troughs and each instrument's native line-spread function (LSF)---and center the moment on the flux centroid $\bar{v}_V$ within each symmetric window $[-V, +V]$:
+\begin{equation}
+\sigma^2(V) = \frac{\int_{-V}^{V} (v - \bar{v}_V)^2 f(v)\,dv}{\int_{-V}^{V} f(v)\,dv},
+\quad
+\bar{v}_V = \frac{\int_{-V}^{V} v\, f(v)\,dv}{\int_{-V}^{V} f(v)\,dv}.
+\label{eq:sigma_v}
+\end{equation}
+We refer to $\sigV \equiv \sqrt{\sigma^2(V)}$ throughout as the \emph{finite-window line dispersion}. Exact positive-overlap pixel quadrature formulas are given in Appendix~\ref{app:exact_int}; to avoid bridging wavelength gaps in the window scan, we cap each pixel half-width at $0.55$ times the median pixel spacing and require $\ge 98\%$ valid velocity coverage, positive window flux, and $\sigma^2(V) > 0$.
+
+Two properties shape \sigV\ across $V \in \{1500, 2500, 3500, 4500\}~\kms$. First, for a nearly constant flux density inside a narrow window, Equation~(\ref{eq:sigma_v}) approaches the flat-window limit $\sigV = V/\sqrt{3}$ (Appendix~\ref{app:exact_int}), compressing differences between broader and narrower profiles; moreover, a fixed velocity window $V$ samples further into the wings of narrower LRD lines (median $\FWHMsg = \JWSTCleanMedFWHM~\kms$) than of broader SDSS lines (median $\SDSSCleanMedFWHM~\kms$). Second, the $(v - \bar{v}_V)^2$ weight amplifies weak-wing noise and continuum-placement errors at large $V$; the sensitivity of a dispersion measurement to weak line wings has also been demonstrated in repeated single-epoch AGN spectroscopy \citep{Denney2009}. Using empirical four-pixel block-noise injections adopted before measuring the primary moments (Appendix~\ref{app:injections}), high-S/N JWST spectra satisfy all recovery criteria through $V = 4500~\kms$ ($\PTCalJWSTGaussFourFiveErrSixEight$ and $\PTCalJWSTWingFourFiveErrSixEight$~dex 68th-percentile errors for Gaussian and core-plus-wing inputs) and lose joint window qualification at $V = 5500$ and $6000~\kms$.
+
+\subsection{Velocity-Binned Balmer Flux Ratios}
+\label{sec:methods_balmer}
+
+For RUBIES-EGS-55604 ($z_{\OIII} = \POneSrcFiveFiveZOIII$, G395M, $\mathrm{NCOMBINE} = \POneSrcFiveFiveNCombine$), RUBIES-EGS-42046 ($z_{\OIII} = \POneSrcFourTwoZOIII$, G395M, $\mathrm{NCOMBINE} = \POneSrcFourTwoNCombine$), and JADES-GN-68797 ($z_{\OIII} = \POneSrcSixEightZOIII$, G395H, $\mathrm{NCOMBINE} = \POneSrcSixEightNCombine$), we reference velocities to local systemic \OIII\ (distinct from the broad-\Ha\ fit zero point used in Section~\ref{sec:methods_moments} and in the archived two-line template) and integrate exact native-pixel overlaps across five symmetric $|v|$ intervals ($0$--$300$, $300$--$1000$, $1000$--$1500$, $1500$--$2500$, and $2500$--$3500~\kms$). We measure $R \equiv F(\Hb)/F(\Ha)$ both after narrow-line subtraction and LSF matching (treatment~A) and after subtracting only a local linear continuum around each line (treatment~B). Both measurements retain Balmer absorption without infill and use the same combined grating spectrum; equivalent decrements $D = 1/R$ are quoted only where integrated $\Hb \ge 2\sigma$.
+
+\subsection{Residual Scatter and Resampling}
+\label{sec:methods_regression}
+
+At each window half-width $V$, we report $s(V)$, the sample standard deviation of the residuals (in dex) about a separate ordinary least-squares (OLS) linear fit of $\log_{10}\sigV$ (or $\log_{10}\FWHMsg$) on $\log_{10}\LHa$. For each window we resample its valid sources with replacement and refit the relation. For the change between windows, $\Delta s_{2500\to 4500} \equiv s(4500) - s(2500)$, we resample sources measured in both windows as pairs and refit both relations on each bootstrap draw. Cross-survey scatter differences resample each survey independently. Throughout, $s(V)$ and $\Delta s_{2500\to 4500}$ quantify \emph{observed} residual scatter rather than measurement-error-corrected intrinsic scatter, and \LHa-conditioned scatter is kept distinct from Euclid's continuum-conditioned, selection-corrected intrinsic scatter $\sigma_w$.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Velocity-Window Response of the Observed \texorpdfstring{\Ha}{H-alpha} Scatter}
+\label{sec:res_moments}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig1_cumulative_dispersion.pdf}
+\caption{Observed scatter in broad-\Ha\ finite-window line dispersion \sigV\ at fixed \LHa\ under unified default continuum sidebands. \textbf{(a)} Per-window OLS residual scatter $s(V)$ across the validated range $V = 1500$--$4500~\kms$ for the $\PTJWSTPresetN$ primary JWST LRDs (crimson circles and solid curve) and $\PTSDSSPresetNFourFive$--$\PTSDSSPresetNOneFive$ SDSS Type-1 AGN (steel-blue squares and dashed curve); shaded bands denote per-window 95\% source-bootstrap confidence intervals (extended-window calibration in Appendix~\ref{app:calibration}). \textbf{(b)} Paired scatter increment $\Delta s_{2500\to 4500}$ from $V = 2500$ to $4500~\kms$. Upper rows show observed paired increments with 95\% source-bootstrap confidence intervals (filled symbols with capped solid bars) for the $\PTJWSTPresetN$ JWST sources and the $\PTSDSSPresetNFourFive$ SDSS sources valid in both windows. Lower rows show matching 95\% conditional prediction intervals (capless shaded dashed bands with open median markers) from empirical-noise injections on the same $\PTJWSTPresetN$ JWST sources for single-Gaussian and core-plus-wing emission profiles; the vertical dotted crimson line marks the observed $\PTJWSTPresetN$-source JWST increment.}
+\label{fig:moments}
+\end{figure*}
+
+\begin{deluxetable*}{lccc}
+\tabletypesize{\footnotesize}
+\tablewidth{0pt}
+\tablecaption{Observed Residual Scatters $s(V)$ and Paired Increments Across Validated Velocity Windows\label{tab:moments}}
+\tablehead{
+\colhead{Window Half-Width / Quantity} &
+\colhead{JWST (dex)} &
+\colhead{SDSS (dex)} &
+\colhead{SDSS $N$}
+}
+\startdata
+\cutinhead{Primary Comparison: Default Continuum Sidebands (JWST $N = \PTJWSTPresetN$)}
+$V = 1500~\kms$ &
+  $\PTJWSTPresetSOneFive$ $[\PTJWSTPresetSLoOneFive, \PTJWSTPresetSHiOneFive]$ &
+  $\PTSDSSPresetSOneFive$ $[\PTSDSSPresetSLoOneFive, \PTSDSSPresetSHiOneFive]$ &
+  $\PTSDSSPresetNOneFive$ \\
+$V = 2500~\kms$ &
+  $\PTJWSTPresetSTwoFive$ $[\PTJWSTPresetSLoTwoFive, \PTJWSTPresetSHiTwoFive]$ &
+  $\PTSDSSPresetSTwoFive$ $[\PTSDSSPresetSLoTwoFive, \PTSDSSPresetSHiTwoFive]$ &
+  $\PTSDSSPresetNTwoFive$ \\
+$V = 3500~\kms$ &
+  $\PTJWSTPresetSThreeFive$ $[\PTJWSTPresetSLoThreeFive, \PTJWSTPresetSHiThreeFive]$ &
+  $\PTSDSSPresetSThreeFive$ $[\PTSDSSPresetSLoThreeFive, \PTSDSSPresetSHiThreeFive]$ &
+  $\PTSDSSPresetNThreeFive$ \\
+$V = 4500~\kms$ &
+  $\PTJWSTPresetSFourFive$ $[\PTJWSTPresetSLoFourFive, \PTJWSTPresetSHiFourFive]$ &
+  $\PTSDSSPresetSFourFive$ $[\PTSDSSPresetSLoFourFive, \PTSDSSPresetSHiFourFive]$ &
+  $\PTSDSSPresetNFourFive$ \\
+Paired $\Delta s_{2500\to 4500}$ &
+  $\PTJWSTPresetDeltaSigned$ $[\PTJWSTPresetDeltaLo, \PTJWSTPresetDeltaHi]$ &
+  $\PTSDSSPresetDeltaSigned$ $[\PTSDSSPresetDeltaLo, \PTSDSSPresetDeltaHi]$ &
+  $\PTSDSSPresetNFourFive$ \\
+\cutinhead{Supplementary Check: Supplemented Sidebands (JWST $N = \PTJWSTFullN$)}
+$V = 1500~\kms$ &
+  $\PTJWSTFullSOneFive$ $[\PTJWSTFullSLoOneFive, \PTJWSTFullSHiOneFive]$ &
+  $\PTSDSSFullSOneFive$ $[\PTSDSSFullSLoOneFive, \PTSDSSFullSHiOneFive]$ &
+  $\PTSDSSFullNOneFive$ \\
+$V = 2500~\kms$ &
+  $\PTJWSTFullSTwoFive$ $[\PTJWSTFullSLoTwoFive, \PTJWSTFullSHiTwoFive]$ &
+  $\PTSDSSFullSTwoFive$ $[\PTSDSSFullSLoTwoFive, \PTSDSSFullSHiTwoFive]$ &
+  $\PTSDSSFullNTwoFive$ \\
+$V = 3500~\kms$ &
+  $\PTJWSTFullSThreeFive$ $[\PTJWSTFullSLoThreeFive, \PTJWSTFullSHiThreeFive]$ &
+  $\PTSDSSFullSThreeFive$ $[\PTSDSSFullSLoThreeFive, \PTSDSSFullSHiThreeFive]$ &
+  $\PTSDSSFullNThreeFive$ \\
+$V = 4500~\kms$ &
+  $\PTJWSTFullSFourFive$ $[\PTJWSTFullSLoFourFive, \PTJWSTFullSHiFourFive]$ &
+  $\PTSDSSFullSFourFive$ $[\PTSDSSFullSLoFourFive, \PTSDSSFullSHiFourFive]$ &
+  $\PTSDSSFullNFourFive$ \\
+Paired $\Delta s_{2500\to 4500}$ &
+  $\PTJWSTFullDeltaSigned$ $[\PTJWSTFullDeltaLo, \PTJWSTFullDeltaHi]$ &
+  $\PTSDSSFullDeltaSigned$ $[\PTSDSSFullDeltaLo, \PTSDSSFullDeltaHi]$ &
+  $\PTSDSSFullNFourFive$ \\
+\enddata
+\tablecomments{Entries give the sample standard deviation of $\log_{10}\sigV$ residuals at fixed $\log_{10}\LHa$ (uncorrected for measurement error), with 95\% source-bootstrap confidence intervals in brackets. Paired increments resample sources valid at both $V = 2500$ and $4500~\kms$ (hence SDSS paired $\Delta s$ differs slightly from subtracting single-window scatters with different $N$). Matching 95\% conditional prediction intervals for $\Delta s_{2500\to 4500}$ are $[\PTMockPresetJWSTGaussDeltaLo, \PTMockPresetJWSTGaussDeltaHi]$~dex (Gaussian, median $\PTMockPresetJWSTGaussDeltaMed$) and $[\PTMockPresetJWSTWingDeltaLo, \PTMockPresetJWSTWingDeltaHi]$~dex (core + wing, median $\PTMockPresetJWSTWingDeltaMed$) for the $\PTJWSTPresetN$ default-sideband JWST sources, and $[\PTMockFullJWSTGaussDeltaLo, \PTMockFullJWSTGaussDeltaHi]$ and $[\PTMockFullJWSTWingDeltaLo, \PTMockFullJWSTWingDeltaHi]$~dex for the $\PTJWSTFullN$ supplemented-sideband JWST sources. In the $\PTJWSTFullN$-source supplemented comparison, per-window cross-survey differences $s_{\mathrm{JWST}}(V) - s_{\mathrm{SDSS}}(V)$ are $\PTDiffTwoFive$~$[\PTDiffLoTwoFive, \PTDiffHiTwoFive]$, $\PTDiffThreeFive$~$[\PTDiffLoThreeFive, \PTDiffHiThreeFive]$, and $\PTDiffFourFive$~$[\PTDiffLoFourFive, \PTDiffHiFourFive]$~dex at $V = 2500$, $3500$, and $4500~\kms$.}
+\end{deluxetable*}
+
+In the same $\PTJWSTPresetN$ default-sideband JWST LRDs, widening the \Ha\ velocity half-window from $2500$ to $4500~\kms$ more than doubles the observed scatter in finite-window line dispersion at fixed \LHa, from $s(2500) = \PTJWSTPresetSTwoFive$~dex to $s(4500) = \PTJWSTPresetSFourFive$~dex (Figure~\ref{fig:moments}a and Table~\ref{tab:moments}; median $\sigV = \PTJWSTPresetMedSigTwoFive \to \PTJWSTPresetMedSigFourFive~\kms$). Resampling the $\PTJWSTPresetN$ objects as pairs gives a scatter increase of $\Delta s_{2500\to 4500} = \PTJWSTPresetDeltaSigned$~dex, with a 95\% source-bootstrap confidence interval of $[\PTJWSTPresetDeltaLo, \PTJWSTPresetDeltaHi]$~dex (Figure~\ref{fig:moments}b). A similar rise holds when moments are integrated on the total continuum-subtracted \Ha\ profile without narrow-line removal ($\Delta s_{\mathrm{tot}} = +\PTJWSTPresetRawTotDelta$~dex across the $\PTJWSTPresetN$ sources) and within the $\PTJWSTUnflaggedN$ high-S/N objects without flagged Balmer absorption ($+\PTJWSTUnflaggedDelta$~$[\PTJWSTUnflaggedDeltaLo, \PTJWSTUnflaggedDeltaHi]$~dex).
+
+Under the same default continuum sidebands, the SDSS Type-1 AGN reference rises more gradually across the identical mathematical windows (retaining each survey's native LSF), yielding a paired increase of $\Delta s_{2500\to 4500} = \PTSDSSPresetDeltaSigned$~dex ($[\PTSDSSPresetDeltaLo, \PTSDSSPresetDeltaHi]$~dex) across the $\PTSDSSPresetNFourFive$ spectra valid in both windows. Enabling fallback sidebands for edge spectra (lower block of Table~\ref{tab:moments}; Appendix~\ref{app:edge}) preserves both results ($\PTJWSTFullDeltaSigned$~$[\PTJWSTFullDeltaLo, \PTJWSTFullDeltaHi]$~dex for $\PTJWSTFullN$ JWST sources and $\PTSDSSFullDeltaSigned$~$[\PTSDSSFullDeltaLo, \PTSDSSFullDeltaHi]$~dex for $\PTSDSSFullNFourFive$ paired SDSS sources). In that $\PTJWSTFullN$-source supplemented comparison, where archived per-window cross-survey intervals are defined, JWST scatter is smaller than SDSS at $2500$ and $3500~\kms$, whereas at $4500~\kms$ the difference interval includes zero ($\PTDiffFourFive$~$[\PTDiffLoFourFive, \PTDiffHiFourFive]$~dex; Table~\ref{tab:moments}), indicating no detected difference at the widest validated window without establishing equivalence or a physical crossover velocity.
+
+To test what profile families are compatible with the $\PTJWSTPresetN$-source increase, the lower block of Figure~\ref{fig:moments}(b) compares $\Delta s_{2500\to 4500}$ against source-conditioned empirical-noise injections on the exact same $\PTJWSTPresetN$ JWST spectra (Appendix~\ref{app:injections}). Inputs with single-Gaussian broad emission anchored to each object's \FWHMsg\ have a noiseless finite-window median increment of $\PTMockPresetJWSTGaussDeltaTrue$~dex, but measurement through the pipeline produces a 95\% conditional prediction interval of $[\PTMockPresetJWSTGaussDeltaLo, \PTMockPresetJWSTGaussDeltaHi]$~dex (median $\PTMockPresetJWSTGaussDeltaMed$~dex). Core-plus-wing inputs placing $5$--$35\%$ of the flux into a $3\times$ wider component have a noiseless median increment of $\PTMockPresetJWSTWingDeltaTrue$~dex and a 95\% conditional prediction interval of $[\PTMockPresetJWSTWingDeltaLo, \PTMockPresetJWSTWingDeltaHi]$~dex (median $\PTMockPresetJWSTWingDeltaMed$~dex). Both prediction intervals accommodate the observed $\PTJWSTPresetDeltaSigned$~dex increase (as do the matching $\PTJWSTFullN$-source intervals in Table~\ref{tab:moments}). Current recovery conditions are therefore not yet sufficient to separate the respective contributions of intrinsic wing diversity, finite-window truncation, and wing noise. For SDSS, both single-Gaussian-anchored mock families ($\PTMockPresetSDSSGaussDeltaLo$--$\PTMockPresetSDSSGaussDeltaHi$ and $\PTMockPresetSDSSWingDeltaLo$--$\PTMockPresetSDSSWingDeltaHi$~dex) overestimate the observed $\PTSDSSPresetDeltaSigned$~dex paired increase, so the real SDSS spectra serve strictly as an empirical reference.
+
+\subsection{Velocity-Dependent Balmer Weights}
+\label{sec:res_balmer}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig2_balmer_velocity_windows.pdf}
+\caption{\Hb\ becomes relatively stronger toward the wings in RUBIES-EGS-55604. Panels show velocity-binned flux ratios $R = F(\Hb)/F(\Ha)$ across five symmetric Doppler-velocity intervals relative to local systemic \OIII\ in the three highest-weight same-grating JWST LRDs: \textbf{(a)} RUBIES-EGS-55604, \textbf{(b)} RUBIES-EGS-42046, and \textbf{(c)} JADES-GN-68797. Blue circles show ratios after narrow-line subtraction and LSF matching (A); terracotta squares show ratios after subtracting only a local continuum (B). Both treatments operate on the same combined grating spectrum and retain Balmer absorption. Error bars show $1\sigma$ conditional pixel uncertainties; open symbols mark weak measurements with $\Hb < 2\sigma$, plotted as signed ratios without positivity clipping (where $R > 0$ and $\Hb \ge 2\sigma$, the equivalent Balmer decrement is $D = 1/R$; full numerical values in Appendix Table~\ref{tab:balmer_windows}).}
+\label{fig:balmer}
+\end{figure*}
+
+Figure~\ref{fig:balmer} examines how two Balmer transitions weight the same Doppler-velocity intervals in the three highest-weight dual-line LRDs, building on the center-to-wing Balmer decrement decline discovered by \citet[][their Section~V.3.1 and Figure~9]{Chen2026} by comparing two spectral treatments on identical combined grating spectra (complete five-bin measurements in Appendix Table~\ref{tab:balmer_windows}). Because treatments~A and~B simultaneously differ in continuum model, narrow-line removal, and LSF matching, differences between them reflect the combined sensitivity to spectral decomposition.
+
+In RUBIES-EGS-55604 (Figure~\ref{fig:balmer}a), which has the highest \Hb\ signal-to-noise ratio of the trio, $F(\Ha)/F(\Hb)$ falls from $\POneBSrcFiveFiveZeroThreeD$ at line center ($0$--$300~\kms$) to $\POneBSrcFiveFiveOneFiveTwoFiveD$ in the shoulder ($1500$--$2500~\kms$) and $\POneBSrcFiveFiveTwoFiveThreeFiveD$ in the outer wing ($2500$--$3500~\kms$) after local continuum subtraction alone (B; $R = \POneBSrcFiveFiveZeroThreeR \pm \POneBSrcFiveFiveZeroThreeRErr$ to $\POneBSrcFiveFiveTwoFiveThreeFiveR \pm \POneBSrcFiveFiveTwoFiveThreeFiveRErr$). The decrease survives narrow-line subtraction and LSF matching ($D = \POneASrcFiveFiveZeroThreeD \to \POneASrcFiveFiveOneFiveTwoFiveD \to \POneASrcFiveFiveTwoFiveThreeFiveD$ in A), demonstrating that outer velocity intervals carry greater relative flux weight in \Hb\ than in \Ha\ under either spectral treatment. By contrast, in RUBIES-EGS-42046 (Figure~\ref{fig:balmer}b) the inferred central ratio depends strongly on the decomposition ($D = \POneASrcFourTwoZeroThreeD$ in A vs.\ $\POneBSrcFourTwoZeroThreeD$ in B, and a blue/red asymmetry of $D = \POneASrcFourTwoThreeTenBlueD$ vs.\ $\POneASrcFourTwoThreeTenRedD$ across $300$--$1000~\kms$ in A overlapping the blueshifted absorber reported relative to narrow emission in Table~2 of \citealt{Chen2026}), while \Hb\ drops below $2\sigma$ at $2500$--$3500~\kms$. In JADES-GN-68797 (Figure~\ref{fig:balmer}c), continuum-only subtraction leaves \Hb\ below our $2\sigma$ detection threshold across all intervals beyond $1000~\kms$.
+
+Comparing these resolved profiles with our archived $\POneTmplAllThirtyThreeN$-source same-grating template amplitude ratio ($\POneTmplAllThirtyThreeRatio$, 95\% conditional interval $[\POneTmplAllThirtyThreeLo, \POneTmplAllThirtyThreeHi]$; Appendix~\ref{app:template_weights}) resolves why the two statistics differ. The template normalizes each source's broad-\Ha\ profile to \Hb\ across $300 \le |v| \le 1000~\kms$ (relative to the fitted broad-\Ha\ center) and forms an inverse-variance-weighted wing amplitude over $1500 \le |v| \le 4500~\kms$, which is dominated by the brighter $1500$--$2500~\kms$ shoulder; the resolved ratio in Figure~\ref{fig:balmer} instead compares each velocity bin directly down to the $0$--$300~\kms$ line center (relative to local \OIII). A near-unity template amplitude across the $\POneTmplTopThreeN$ dominant sources ($\POneTmplTopThreeWtPct\%$ of the total template weight) therefore coexists naturally with the center-to-wing gradient in RUBIES-EGS-55604, while the remaining $\POneTmplOtherThirtyN$ fainter sources ($\POneTmplOtherThirtyWtPct\%$ weight) are poorly constrained ($\POneTmplOtherThirtyRatio$~$[\POneTmplOtherThirtyLo, \POneTmplOtherThirtyHi]$, spanning zero and unity).
+
+\subsection{Integrated-Width Population Context}
+\label{sec:res_context}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig3_three_survey_width_luminosity.pdf}
+\caption{Integrated broad-\Ha\ single-Gaussian widths (\FWHMsg) in three independently selected samples on common axes, with uniform OLS residual scatter $s$ at fixed observed \LHa\ listed above each panel. Gold shading marks the shared luminosity interval $\log_{10}(\LHa/\mathrm{erg\,s^{-1}}) = 43.0$--$43.7$; outer black rings in panel~\textbf{(a)} identify its $\JWSTBridgeN$ JWST sources. \textbf{(a)} JWST/NIRSpec LRDs ($N = \JWSTCleanN$ continuum-clean baseline, distinguishing the $\PTJWSTPresetN$ primary default-sideband window sources in filled crimson from the remaining $\JWSTOtherCleanN$ continuum-clean sources). \textbf{(b)} Quality-controlled SDSS DR7 Type-1 AGN ($N = \SDSSCleanN$). \textbf{(c)} Blind Euclid DR1 primary broad-\Ha\ sample ($N = \EuclidMainN$, $19.0 < H_{\mathrm{aper}} < \EuclidHLimit$).}
+\label{fig:three_survey}
+\end{figure*}
+
+Figure~\ref{fig:three_survey} compares integrated \FWHMsg\ at fixed observed \LHa\ across all three surveys using the identical OLS residual standard deviation. The $\JWSTCleanN$-source continuum-clean JWST sample occupies a substantially narrower range of integrated widths ($s = \JWSTCleanSGScatterUniform$~dex; $\PTJWSTPresetSGScatter$~dex for the $\PTJWSTPresetN$ primary window sources) than either SDSS Type-1 AGN ($N = \SDSSCleanN$, $s = \SDSSCleanSGScatterUniform$~dex) or the Euclid DR1 primary sample ($N = \EuclidMainN$, $s = \EuclidMainSGScatterUniform$~dex). Separately, hierarchical modeling of the same $\EuclidMainN$ Euclid DR1 AGN conditioned on total rest-optical continuum luminosity and corrected for flux-limit selection gives an intrinsic width scatter of $\sigma_w = \EuclidMainSigmaW$~dex (95\% credible interval $[\EuclidMainSigmaWLowerNinetyFive, \EuclidMainSigmaWUpperNinetyFive]$~dex). Because only $\JWSTBridgeN$ JWST sources fall inside the shared $\log_{10}(\LHa/\mathrm{erg\,s^{-1}}) = 43.0$--$43.7$ band alongside $\SDSSBridgeN$ SDSS and $\EuclidBridgeN$ Euclid AGN---with a $\BridgeJWSTEuclidContinuumGap$~dex continuum luminosity gap between the brightest JWST and faintest Euclid overlap objects---the three samples establish a population-level reference for integrated \Ha\ widths rather than a test of redshift evolution at fixed nuclear luminosity.
+
+\section{Discussion}
+\label{sec:discussion}
+
+Our two profile measurements address distinct observables---population-level scatter in the \Ha\ finite-window line dispersion (Figure~\ref{fig:moments}) and single-source velocity-binned \Hb/\Ha\ ratios (Figure~\ref{fig:balmer})---that jointly clarify what an integrated LRD line width measures. In a narrow symmetric window where flux density varies only modestly across $[-V, +V]$, the finite-window line dispersion approaches $\sigV = V/\sqrt{3}$ (Appendix~\ref{app:exact_int}), which naturally compresses measured differences among profiles of different overall breadth. As $V$ expands from $2500$ to $4500~\kms$, outer pixels receive $(v - \bar{v}_V)^2$ leverage and the observed scatter across the same $\PTJWSTPresetN$ LRDs more than doubles ($\PTJWSTPresetSTwoFive \to \PTJWSTPresetSFourFive$~dex). Because Gaussian and core-plus-wing injections on those $\PTJWSTPresetN$ spectra both accommodate the observed $\PTJWSTPresetDeltaSigned$~dex increase, the current data show how the measured scatter depends on window width without isolating an intrinsic ``line-core'' invariant or separating wing diversity from truncation and noise.
+
+On the single-object level, a uniform foreground dust screen multiplies $F(\Hb)/F(\Ha)$ by nearly the same factor at every Doppler velocity across a single emission line; while it can shift the integrated Balmer decrement, generating a center-to-wing gradient requires a velocity-dependent intrinsic emission ratio or differential radiative transfer. In RUBIES-EGS-55604, outer Doppler bins carry a larger fraction of \Hb\ relative to \Ha\ under either spectral treatment \citep[corroborating][]{Chen2026}. Physically, higher-$|v|$ photons can arise in stratified broad-line gas where density and $n=2$ optical depth vary across emission zones \citep{OsterbrockFerland2006,InayoshiMaiolino2025,Madau2026b,Scholtz2026}, alongside velocity-selective Balmer absorption in dense gas \citep{deGraaffRuby2025,DEugenio2026,Matthee2026} or frequency redistribution and differential escape through optically thick envelopes \citep[][for an overall review, see \citealt{InayoshiHo}]{Laor2006,Brazzini2025,Rusakov2026,Chang2025,NaiduBHStar2026,deGraaff2026}. Because scattering and absorption can decouple observed Doppler shift $v$ from bulk orbital speed, velocity-binned ratios do not uniquely map $v$ onto radius or determine whether \Ha\ and \Hb\ yield different black hole masses on their own.
+
+Placed beside the wider integrated-width distributions of SDSS and Euclid DR1 AGN (Figure~\ref{fig:three_survey}), these results define a concrete forward-modeling requirement. Without independent black hole masses or reverberation lags, our spectra do not test the numerical value of a universal virial factor \fvir. Instead, any dynamical, optical-depth, or scattering model that uses a finite-window line dispersion or integrated width to interpret LRD kinematics must predict observables over the \emph{same transition, width definition, and velocity interval} as the data---specifically matching both the window-dependent scatter $s(V)$ in Figure~\ref{fig:moments} and the velocity-binned Balmer ratios in bright dual-line spectra such as RUBIES-EGS-55604. Future deeper NIRSpec grating spectroscopy will be essential to extend validated \Ha\ moments beyond $4500~\kms$, expand resolved \Hb/\Ha\ profiles beyond the brightest objects, and test width-scaled relative windows once window-boundary uncertainties are propagated.
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+By holding the source sample, width definition, and broad-\Ha\ luminosities fixed while varying the velocity interval, we reach two principal empirical conclusions within our three-survey integrated-width context:
+\begin{enumerate}
+\item At fixed broad-\Ha\ luminosity, the observed scatter in finite-window line dispersion \sigV\ across the same $\PTJWSTPresetN$ high-S/N JWST LRDs increases from $\PTJWSTPresetSTwoFive$~dex at $V = 2500~\kms$ to $\PTJWSTPresetSFourFive$~dex at $V = 4500~\kms$, a paired increment of $\PTJWSTPresetDeltaSigned$~dex (95\% source-bootstrap interval $[\PTJWSTPresetDeltaLo, \PTJWSTPresetDeltaHi]$~dex; Table~\ref{tab:moments}), compared with $\PTSDSSPresetDeltaSigned$~dex ($[\PTSDSSPresetDeltaLo, \PTSDSSPresetDeltaHi]$~dex) in $\PTSDSSPresetNFourFive$ default-sideband SDSS Type-1 AGN and integrated-width scatters of $\JWSTCleanSGScatterUniform$, $\SDSSCleanSGScatterUniform$, and $\EuclidMainSGScatterUniform$~dex across JWST ($N = \JWSTCleanN$), SDSS ($N = \SDSSCleanN$), and Euclid DR1 ($N = \EuclidMainN$). Source-conditioned injections on the same $\PTJWSTPresetN$ JWST spectra show that both Gaussian and core-plus-wing profiles span the observed $\Delta s_{2500\to 4500}$, leaving intrinsic wing differences, finite-window truncation, and noise unseparated.
+\item In the clearest dual-line spectrum, RUBIES-EGS-55604, the added outer velocity intervals are relatively brighter in \Hb\ than in \Ha\ under both narrow-line-subtracted and continuum-only treatments of the same combined grating spectrum ($D = \POneBSrcFiveFiveZeroThreeD \to \POneBSrcFiveFiveOneFiveTwoFiveD \to \POneBSrcFiveFiveTwoFiveThreeFiveD$ after continuum subtraction alone). Both the choice of Balmer transition and the velocity interval admitted to the finite-window line dispersion must therefore be matched explicitly when comparing broad-line models to LRD observations.
+\end{enumerate}
+
+\section*{Acknowledgments}
+[Author acknowledgments, funding statements, DAWN JWST Archive / SDSS / Euclid archive acknowledgments, and data-availability identifiers to be inserted by the authors prior to submission.]
+
+\facilities{JWST (NIRSpec), Sloan, Euclid (NISP, VIS)}
+
+\software{\texttt{msaexp} \citep{msaexp}, NumPy \citep{harris2020array}, SciPy \citep{2020SciPy-NMeth}, Matplotlib \citep{Hunter:2007}, Astropy \citep{astropy:2013,astropy:2018,astropy:2022}}
+
+\clearpage
+\appendix
+\restartappendixnumbering
+\makeatletter
+\@addtoreset{figure}{section}
+\@addtoreset{table}{section}
+\makeatother
+\renewcommand{\theHfigure}{\Alph{section}\arabic{figure}}
+\renewcommand{\theHtable}{\Alph{section}\arabic{table}}
+\twocolumngrid
+
+\section{Finite-Window Integration, Recovery Criteria, and Edge Sidebands}
+\label{app:calibration}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/figA1_moment_calibration.pdf}
+\caption{Calibration and extended-window diagnostics for the \Ha\ finite-window line dispersion. \textbf{(a)} 68th-percentile $|\Delta\log_{10}\sigV|$ across $V = 1500$--$6000~\kms$. Open symbols fail at least one per-profile recovery criterion ($\ge 85\%$ usable trials, $|\text{median log bias}| \le 0.03$~dex, or 68th-percentile $|\Delta\log_{10}\sigV| \le 0.08$~dex; the dashed horizontal line marks only the $0.08$~dex error threshold, so JWST core-plus-wing at $V = 6000~\kms$ is open due to its $\PTCalJWSTWingSixZeroUsablePct\%$ usable rate). \textbf{(b)} Extended-window observed scatter diagnostic showing validated $V \le 4500~\kms$ curves alongside disqualified JWST windows at $V = 5500$ and $6000~\kms$ (isolated open circles).}
+\label{fig:app_cal}
+\end{figure*}
+
+\subsection{Positive-Overlap Pixel Quadrature and Flat-Window Limit}
+\label{app:exact_int}
+
+On each native wavelength grid $\{\lambda_i\}$, midpoint edges $\lambda_{i,\pm} = \tfrac{1}{2}(\lambda_i + \lambda_{i\pm 1})$ (extrapolated symmetrically at endpoints) convert to rest-frame velocity edges $[v_{i,-}, v_{i,+}]$. In the \Ha\ moment scan, each pixel edge is further restricted to lie within $0.55$ times the median spectrum pixel spacing of $v_i$ so that masked or missing wavelength intervals are never bridged. Intersecting each valid pixel with $[v_{\mathrm{lo}}, v_{\mathrm{hi}}]$ and retaining only positive overlaps via $a_i = \max(v_{i,-}, v_{\mathrm{lo}})$ and $b_i = \max(a_i, \min(v_{i,+}, v_{\mathrm{hi}}))$ gives exact piecewise-constant integrals for window flux $F(V) = \sum_i f_i (b_i - a_i)$, centroid $\bar{v}_V = [2 F(V)]^{-1}\sum_i f_i (b_i^2 - a_i^2)$, and finite-window line dispersion
+\begin{equation}
+\sigV = \left[ \frac{1}{3 F(V)} \sum_i f_i \left( (b_i - \bar{v}_V)^3 - (a_i - \bar{v}_V)^3 \right) \right]^{1/2}.
+\label{eq:app_sigma_v}
+\end{equation}
+For constant flux $f_i = f_0$ across $[-V, +V]$, Equation~(\ref{eq:app_sigma_v}) yields $F(V) = 2 f_0 V$, $\bar{v}_V = 0$, and $\sigV = V/\sqrt{3}$. Because finite $V$ truncates broader lines more strongly than narrower lines, the noiseless $\PTJWSTPresetN$-source Gaussian mock scatter at $V = 2500~\kms$ ($\PTMockPresetJWSTGaussTrueTwoFive$~dex; SDSS $\PTMockPresetSDSSGaussTrueTwoFive$~dex) lies below its untruncated full-profile counterpart ($\PTMockPresetJWSTGaussTrueFull$ and $\PTMockPresetSDSSGaussTrueFull$~dex).
+
+\subsection{Stage-1 Recovery Calibration and Stage-2 Conditional Ensembles}
+\label{app:injections}
+
+\begin{deluxetable*}{lcccccc}
+\tabletypesize{\scriptsize}
+\tabcolsep=4.5pt
+\tablewidth{0pt}
+\tablecaption{Stage-1 Injection-Recovery Calibration Across Tested Velocity Windows\label{tab:calibration}}
+\tablehead{
+\colhead{Window $V$} &
+\multicolumn{3}{c}{Gaussian Input} &
+\multicolumn{3}{c}{Core + Wing Input ($5$--$35\%$ Wing Flux)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+\colhead{(\kms)} &
+\colhead{Usable (\%)} &
+\colhead{Med.\ Bias (dex)} &
+\colhead{68th Err.\ (dex)} &
+\colhead{Usable (\%)} &
+\colhead{Med.\ Bias (dex)} &
+\colhead{68th Err.\ (dex)}
+}
+\startdata
+\cutinhead{JWST, $\PTCalJWSTAttemptedTargetsN$ targets attempted (default sidebands)}
+1500 & $\PTCalJWSTGaussOneFiveUsablePct$ & $\PTCalJWSTGaussOneFiveBias$ & $\PTCalJWSTGaussOneFiveErrSixEight$ & $\PTCalJWSTWingOneFiveUsablePct$ & $\PTCalJWSTWingOneFiveBias$ & $\PTCalJWSTWingOneFiveErrSixEight$ \\
+2500 & $\PTCalJWSTGaussTwoFiveUsablePct$ & $\PTCalJWSTGaussTwoFiveBias$ & $\PTCalJWSTGaussTwoFiveErrSixEight$ & $\PTCalJWSTWingTwoFiveUsablePct$ & $\PTCalJWSTWingTwoFiveBias$ & $\PTCalJWSTWingTwoFiveErrSixEight$ \\
+3500 & $\PTCalJWSTGaussThreeFiveUsablePct$ & $\PTCalJWSTGaussThreeFiveBias$ & $\PTCalJWSTGaussThreeFiveErrSixEight$ & $\PTCalJWSTWingThreeFiveUsablePct$ & $\PTCalJWSTWingThreeFiveBias$ & $\PTCalJWSTWingThreeFiveErrSixEight$ \\
+4500 & $\PTCalJWSTGaussFourFiveUsablePct$ & $\PTCalJWSTGaussFourFiveBias$ & $\PTCalJWSTGaussFourFiveErrSixEight$ & $\PTCalJWSTWingFourFiveUsablePct$ & $\PTCalJWSTWingFourFiveBias$ & $\PTCalJWSTWingFourFiveErrSixEight$ \\
+5500\tablenotemark{a} & $\PTCalJWSTGaussFiveFiveUsablePct^{\ast}$ & $\PTCalJWSTGaussFiveFiveBias$ & $\PTCalJWSTGaussFiveFiveErrSixEight^{\ast}$ & $\PTCalJWSTWingFiveFiveUsablePct$ & $\PTCalJWSTWingFiveFiveBias$ & $\PTCalJWSTWingFiveFiveErrSixEight$ \\
+6000\tablenotemark{a} & $\PTCalJWSTGaussSixZeroUsablePct^{\ast}$ & $\PTCalJWSTGaussSixZeroBias$ & $\PTCalJWSTGaussSixZeroErrSixEight^{\ast}$ & $\PTCalJWSTWingSixZeroUsablePct^{\ast}$ & $\PTCalJWSTWingSixZeroBias$ & $\PTCalJWSTWingSixZeroErrSixEight$ \\
+\cutinhead{SDSS, $\PTCalSDSSAttemptedTargetsN$ targets attempted (default sidebands)}
+1500 & $\PTCalSDSSGaussOneFiveUsablePct$ & $\PTCalSDSSGaussOneFiveBias$ & $\PTCalSDSSGaussOneFiveErrSixEight$ & $\PTCalSDSSWingOneFiveUsablePct$ & $\PTCalSDSSWingOneFiveBias$ & $\PTCalSDSSWingOneFiveErrSixEight$ \\
+2500 & $\PTCalSDSSGaussTwoFiveUsablePct$ & $\PTCalSDSSGaussTwoFiveBias$ & $\PTCalSDSSGaussTwoFiveErrSixEight$ & $\PTCalSDSSWingTwoFiveUsablePct$ & $\PTCalSDSSWingTwoFiveBias$ & $\PTCalSDSSWingTwoFiveErrSixEight$ \\
+3500 & $\PTCalSDSSGaussThreeFiveUsablePct$ & $\PTCalSDSSGaussThreeFiveBias$ & $\PTCalSDSSGaussThreeFiveErrSixEight$ & $\PTCalSDSSWingThreeFiveUsablePct$ & $\PTCalSDSSWingThreeFiveBias$ & $\PTCalSDSSWingThreeFiveErrSixEight$ \\
+4500 & $\PTCalSDSSGaussFourFiveUsablePct$ & $\PTCalSDSSGaussFourFiveBias$ & $\PTCalSDSSGaussFourFiveErrSixEight$ & $\PTCalSDSSWingFourFiveUsablePct$ & $\PTCalSDSSWingFourFiveBias$ & $\PTCalSDSSWingFourFiveErrSixEight$ \\
+5500 & $\PTCalSDSSGaussFiveFiveUsablePct$ & $\PTCalSDSSGaussFiveFiveBias$ & $\PTCalSDSSGaussFiveFiveErrSixEight$ & $\PTCalSDSSWingFiveFiveUsablePct$ & $\PTCalSDSSWingFiveFiveBias$ & $\PTCalSDSSWingFiveFiveErrSixEight$ \\
+6000 & $\PTCalSDSSGaussSixZeroUsablePct$ & $\PTCalSDSSGaussSixZeroBias$ & $\PTCalSDSSGaussSixZeroErrSixEight$ & $\PTCalSDSSWingSixZeroUsablePct$ & $\PTCalSDSSWingSixZeroBias$ & $\PTCalSDSSWingSixZeroErrSixEight$ \\
+\enddata
+\tablecomments{Stage-1 calibration injected $10$ empirical four-pixel block-noise realizations per attempted target and profile class under default sidebands, so usable percentages divide by all attempted realizations in each cell (e.g., $\PTCalJWSTGaussOneFiveOkTrials/\PTCalJWSTGaussOneFiveTotTrials = \PTCalJWSTGaussOneFiveUsablePct\%$ for JWST and $\PTCalSDSSGaussOneFiveOkTrials/\PTCalSDSSGaussOneFiveTotTrials = \PTCalSDSSGaussOneFiveUsablePct\%$ for SDSS at $V = 1500~\kms$ Gaussian), including spectra that lack default sidebands. Joint window qualification requires both profile classes to achieve usable trials $\ge 85\%$, $|\text{median log bias}| \le 0.03$~dex, and 68th-percentile $|\Delta\log_{10}\sigV| \le 0.08$~dex; asterisks ($^{\ast}$) mark individual threshold violations.}
+\tablenotetext{a}{Loses joint JWST window qualification ($V = 5500~\kms$ fails Gaussian usable rate and error; $V = 6000~\kms$ fails Gaussian usable rate/error and core-plus-wing usable rate). Across all $\JWSTCleanN$ continuum-clean JWST targets ($\PTJWSTFortyNFourFive$ usable at $4500~\kms$, observed $s = \PTJWSTFortySTwoFive \to \PTJWSTFortySFourFive$~dex), Gaussian recovery already fails at $V = 4500~\kms$ ($\PTCalJWSTFortyGaussFourFiveUsablePct\%$ usable, $\PTCalJWSTFortyGaussFourFiveErrSixEight$~dex 68th-percentile error).}
+\end{deluxetable*}
+
+We adopted the Stage-1 recovery criteria before measuring the primary finite-window moments (Figure~\ref{fig:app_cal} and Table~\ref{tab:calibration}), injecting $10$ four-pixel block-noise trials per attempted target ($\PTCalJWSTAttemptedTargetsN$ high-S/N JWST and $\PTCalSDSSAttemptedTargetsN$ SDSS targets) with synthetic broad \Ha, narrow \Ha+\NII, linear continuum, and blueshifted absorption in a subset of trials. Subsequently, Stage-2 conditional prediction ensembles generated $60$ realizations per JWST source and $12$ per SDSS source per profile class. In both classes we set the intrinsic core FWHM to the measured \FWHMsg\ of that source and include blueshifted absorption in a subset of realizations before instrumental convolution. We draw one realization recovered in both windows per source, preserving its paired noise, and combine sources into $4000$ paired sample draws to obtain the $\PTJWSTPresetN$-source default-sideband prediction intervals in Figure~\ref{fig:moments}(b) and the $\PTJWSTFullN$-source supplemented intervals in Table~\ref{tab:moments}.
+
+\subsection{Fallback Sidebands for Edge Spectra}
+\label{app:edge}
+
+After the primary default-sideband analysis, we tested alternative fallback continuum windows ($[+5600, +6300]~\kms$ on the red side; $[-6300, -5400]~\kms$ on the blue side) for spectra truncated near detector edges: RUBIES-EGS-50052 and JADES-GS-38562 in JWST, and the additional SDSS spectra entering the $\PTSDSSFullNFourFive$--$\PTSDSSFullNOneFive$ supplemented set. At $V = 4500~\kms$, RUBIES-EGS-50052 reaches $\PTEdgeFiveZeroZeroFiveTwoGaussUsablePct\%$ usable ($\PTEdgeFiveZeroZeroFiveTwoGaussErrSixEight$~dex 68th-percentile error) for Gaussian inputs and $\PTEdgeFiveZeroZeroFiveTwoWingUsablePct\%$ ($\PTEdgeFiveZeroZeroFiveTwoWingErrSixEight$~dex) for core-plus-wing inputs, whereas JADES-GS-38562 is noisier near the detector cutoff ($\PTEdgeThreeEightFiveSixTwoGaussUsablePct\%$ usable, $\PTEdgeThreeEightFiveSixTwoGaussErrSixEight$~dex error for Gaussian; $\PTEdgeThreeEightFiveSixTwoWingUsablePct\%$, $\PTEdgeThreeEightFiveSixTwoWingErrSixEight$~dex for core-plus-wing), motivating the $\PTJWSTPresetN$-source default-sideband set as our primary sample.
+
+\section{Velocity-Binned Balmer Ratios and Template Weight Breakdown}
+\label{app:template_weights}
+
+Table~\ref{tab:balmer_windows} lists the complete five-window $R = F(\Hb)/F(\Ha)$ and $D = 1/R$ measurements plotted in Figure~\ref{fig:balmer}. Figure~\ref{fig:app_template} shows which objects dominate the archived $\POneTmplAllThirtyThreeN$-source same-grating template statistic discussed in Section~\ref{sec:res_balmer}, evaluated using the frozen inverse-variance weights and $4096$ holdout empirical-noise realizations. Because inverse-variance template weights scale quadratically with line S/N, RUBIES-EGS-55604, RUBIES-EGS-42046, and JADES-GN-68797 carry $\POneTmplTopThreeWtPct\%$ of the total weight ($\POneTmplTopThreeRatio$~$[\POneTmplTopThreeLo, \POneTmplTopThreeHi]$). The complementary $\POneTmplOtherThirtyN$ fainter objects carry $\POneTmplOtherThirtyWtPct\%$ of the weight and remain poorly constrained ($\POneTmplOtherThirtyRatio$~$[\POneTmplOtherThirtyLo, \POneTmplOtherThirtyHi]$), with a signed amplitude interval that spans both zero and unity because noisy \Hb\ amplitudes are retained without positivity clipping.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.52\textwidth]{figures/figB1_template_weights.pdf}
+\caption{\Hb\ template amplitude in the $1500$--$4500~\kms$ wing band relative to the $300$--$1000~\kms$ normalization band (95\% pixel-noise intervals conditional on fixed \Ha\ templates) across all $\POneTmplAllThirtyThreeN$ same-grating sources ($\POneTmplAllThirtyThreeRatio$~$[\POneTmplAllThirtyThreeLo, \POneTmplAllThirtyThreeHi]$), the top $\POneTmplTopThreeN$ sources shown in Figure~\ref{fig:balmer} ($\POneTmplTopThreeWtPct\%$ weight; $\POneTmplTopThreeRatio$~$[\POneTmplTopThreeLo, \POneTmplTopThreeHi]$), and the remaining $\POneTmplOtherThirtyN$ sources ($\POneTmplOtherThirtyWtPct\%$ weight; $\POneTmplOtherThirtyRatio$~$[\POneTmplOtherThirtyLo, \POneTmplOtherThirtyHi]$).}
+\label{fig:app_template}
+\end{figure*}
+
+\begin{deluxetable*}{lcccccc}
+\tabletypesize{\scriptsize}
+\tablewidth{0pt}
+\tablecaption{Velocity-Binned \Hb/\Ha\ Flux Ratios $R$ and Equivalent Decrements $D$ in Three High-Weight Same-Grating LRDs\label{tab:balmer_windows}}
+\tablehead{
+\colhead{$|v|$ Interval} &
+\multicolumn{2}{c}{RUBIES-EGS-55604} &
+\multicolumn{2}{c}{RUBIES-EGS-42046} &
+\multicolumn{2}{c}{JADES-GN-68797} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+\colhead{(\kms)} &
+\colhead{Narrow sub.\ (A)} &
+\colhead{Cont.\ only (B)} &
+\colhead{Narrow sub.\ (A)} &
+\colhead{Cont.\ only (B)} &
+\colhead{Narrow sub.\ (A)} &
+\colhead{Cont.\ only (B)}
+}
+\startdata
+$0$--$300$ &
+  $\POneASrcFiveFiveZeroThreeR \pm \POneASrcFiveFiveZeroThreeRErr$ ($\POneASrcFiveFiveZeroThreeD$) &
+  $\POneBSrcFiveFiveZeroThreeR \pm \POneBSrcFiveFiveZeroThreeRErr$ ($\POneBSrcFiveFiveZeroThreeD$) &
+  $\POneASrcFourTwoZeroThreeR \pm \POneASrcFourTwoZeroThreeRErr$ ($\POneASrcFourTwoZeroThreeD$) &
+  $\POneBSrcFourTwoZeroThreeR \pm \POneBSrcFourTwoZeroThreeRErr$ ($\POneBSrcFourTwoZeroThreeD$) &
+  $\POneASrcSixEightZeroThreeR \pm \POneASrcSixEightZeroThreeRErr$ ($\POneASrcSixEightZeroThreeD$) &
+  $\POneBSrcSixEightZeroThreeR \pm \POneBSrcSixEightZeroThreeRErr$ ($\POneBSrcSixEightZeroThreeD$) \\
+$300$--$1000$ &
+  $\POneASrcFiveFiveThreeTenR \pm \POneASrcFiveFiveThreeTenRErr$ ($\POneASrcFiveFiveThreeTenD$) &
+  $\POneBSrcFiveFiveThreeTenR \pm \POneBSrcFiveFiveThreeTenRErr$ ($\POneBSrcFiveFiveThreeTenD$) &
+  $\POneASrcFourTwoThreeTenR \pm \POneASrcFourTwoThreeTenRErr$ ($\POneASrcFourTwoThreeTenD$) &
+  $\POneBSrcFourTwoThreeTenR \pm \POneBSrcFourTwoThreeTenRErr$ ($\POneBSrcFourTwoThreeTenD$) &
+  $\POneASrcSixEightThreeTenR \pm \POneASrcSixEightThreeTenRErr$ ($\POneASrcSixEightThreeTenD$) &
+  $\POneBSrcSixEightThreeTenR \pm \POneBSrcSixEightThreeTenRErr$ ($\POneBSrcSixEightThreeTenD$) \\
+$1000$--$1500$ &
+  $\POneASrcFiveFiveTenOneFiveR \pm \POneASrcFiveFiveTenOneFiveRErr$ ($\POneASrcFiveFiveTenOneFiveD$) &
+  $\POneBSrcFiveFiveTenOneFiveR \pm \POneBSrcFiveFiveTenOneFiveRErr$ ($\POneBSrcFiveFiveTenOneFiveD$) &
+  $\POneASrcFourTwoTenOneFiveR \pm \POneASrcFourTwoTenOneFiveRErr$ ($\POneASrcFourTwoTenOneFiveD$) &
+  $\POneBSrcFourTwoTenOneFiveR \pm \POneBSrcFourTwoTenOneFiveRErr$ ($\POneBSrcFourTwoTenOneFiveD$) &
+  $\POneASrcSixEightTenOneFiveR \pm \POneASrcSixEightTenOneFiveRErr$ ($\POneASrcSixEightTenOneFiveD$) &
+  $\POneBSrcSixEightTenOneFiveR \pm \POneBSrcSixEightTenOneFiveRErr$ ($<2\sigma$) \\
+$1500$--$2500$ &
+  $\POneASrcFiveFiveOneFiveTwoFiveR \pm \POneASrcFiveFiveOneFiveTwoFiveRErr$ ($\POneASrcFiveFiveOneFiveTwoFiveD$) &
+  $\POneBSrcFiveFiveOneFiveTwoFiveR \pm \POneBSrcFiveFiveOneFiveTwoFiveRErr$ ($\POneBSrcFiveFiveOneFiveTwoFiveD$) &
+  $\POneASrcFourTwoOneFiveTwoFiveR \pm \POneASrcFourTwoOneFiveTwoFiveRErr$ ($\POneASrcFourTwoOneFiveTwoFiveD$) &
+  $\POneBSrcFourTwoOneFiveTwoFiveR \pm \POneBSrcFourTwoOneFiveTwoFiveRErr$ ($\POneBSrcFourTwoOneFiveTwoFiveD$) &
+  $\POneASrcSixEightOneFiveTwoFiveR \pm \POneASrcSixEightOneFiveTwoFiveRErr$ ($\POneASrcSixEightOneFiveTwoFiveD$) &
+  $\POneBSrcSixEightOneFiveTwoFiveR \pm \POneBSrcSixEightOneFiveTwoFiveRErr$ ($<2\sigma$) \\
+$2500$--$3500$ &
+  $\POneASrcFiveFiveTwoFiveThreeFiveR \pm \POneASrcFiveFiveTwoFiveThreeFiveRErr$ ($\POneASrcFiveFiveTwoFiveThreeFiveD$) &
+  $\POneBSrcFiveFiveTwoFiveThreeFiveR \pm \POneBSrcFiveFiveTwoFiveThreeFiveRErr$ ($\POneBSrcFiveFiveTwoFiveThreeFiveD$) &
+  $\POneASrcFourTwoTwoFiveThreeFiveR \pm \POneASrcFourTwoTwoFiveThreeFiveRErr$ ($<2\sigma$) &
+  $\POneBSrcFourTwoTwoFiveThreeFiveR \pm \POneBSrcFourTwoTwoFiveThreeFiveRErr$ ($<2\sigma$) &
+  $\POneASrcSixEightTwoFiveThreeFiveR \pm \POneASrcSixEightTwoFiveThreeFiveRErr$ ($<2\sigma$) &
+  $\POneBSrcSixEightTwoFiveThreeFiveR \pm \POneBSrcSixEightTwoFiveThreeFiveRErr$ ($<2\sigma$) \\
+\enddata
+\tablecomments{Entries list $R \equiv F(\Hb)/F(\Ha) \pm 1\sigma$ integrated over symmetric native-pixel overlaps relative to local systemic \OIII, propagating conditional pixel uncertainties (plus local sideband continuum-fit covariance in treatment~B). Equivalent decrements $D = 1/R$ appear in parentheses only where integrated $\Hb \ge 2\sigma$.}
+\end{deluxetable*}
+
+\onecolumngrid
+\clearpage
+\twocolumngrid
+\bibliography{references}
+\bibliographystyle{aasjournal}
+
+\end{document}
