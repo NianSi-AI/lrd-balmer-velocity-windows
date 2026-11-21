@@ -1,3 +1,4 @@
+\pdfoutput=1
 \documentclass[twocolumn]{aastex631}
 
 \usepackage{amsmath}
@@ -23,14 +24,18 @@
 \newcommand{\sigV}{\ensuremath{\sigma(V)}}
 
 \shorttitle{Velocity-Window Dependence of the LRD \Ha\ Relation}
-\shortauthors{[Author List To Be Inserted]}
+\shortauthors{Wang}
+\hypersetup{pdftitle={Velocity-Window Dependence of the Broad H-alpha Width-Luminosity Relation in Little Red Dots},pdfauthor={Haoyu Wang}}
 
 \begin{document}
 
 \title{Velocity-Window Dependence of the Broad \texorpdfstring{\Ha}{H-alpha} Width--Luminosity Relation in Little Red Dots}
 
-\author{[Author List To Be Inserted]}
-\affiliation{[Affiliation To Be Inserted]}
+\correspondingauthor{Haoyu Wang}
+\email{pkuwanghaoyu@pku.edu.cn}
+
+\author[0009-0005-9117-0842]{Haoyu Wang}
+\affiliation{Independent Researcher}
 
 \begin{abstract}
 Broad Balmer emission lines probe black hole masses and nuclear kinematics in high-redshift active galactic nuclei (AGNs). In JWST ``little red dots'' (LRDs), integrated broad-\Ha\ widths span a remarkably narrow range at fixed line luminosity, raising the question of whether this tightness persists once outer-wing emission is included. Holding each object and its broad-\Ha\ luminosity fixed, we measure the finite-window line dispersion \sigV, the flux-weighted second-moment width within $\pm V$, from $V = 1500$ to $4500~\kms$ in JWST/NIRSpec spectra and Sloan Digital Sky Survey (SDSS) Type-1 AGNs. Across $\PTJWSTPresetN$ high signal-to-noise LRDs, the observed scatter in $\log_{10}\sigV$ at fixed \LHa\ rises from $\PTJWSTPresetSTwoFiveThreeDec$ to $\PTJWSTPresetSFourFiveThreeDec$~dex between $V = 2500$ and $4500~\kms$, a paired increase of $\PTJWSTPresetDeltaThreeDec$~dex with a 95\% bootstrap interval of $\PTJWSTPresetDeltaLoThreeDec$--$\PTJWSTPresetDeltaHiThreeDec$~dex, compared with $\PTSDSSPresetDeltaThreeDec$~dex across $\PTSDSSPresetNFourFive$ SDSS AGNs. Injecting synthetic profiles into the empirical noise of the same $\PTJWSTPresetN$ spectra shows that single-Gaussian and core-plus-wing models both accommodate this rise, leaving intrinsic wing diversity, truncation, and wing noise unseparated. In the clearest dual-line spectrum, RUBIES-EGS-55604, \Hb\ strengthens relative to \Ha\ from line center to wing under two spectral decompositions of the same grating spectrum. Alongside integrated widths in JWST, SDSS, and $\EuclidMainN$ Euclid DR1 AGNs, these results show that the tight \Ha\ scaling depends on the velocities included in \sigV, requiring mass and kinematic models to match both transition and velocity interval.
@@ -267,7 +272,22 @@ Holding the objects, width definition, and broad-\Ha\ luminosities fixed across 
 \end{enumerate}
 
 \section*{Acknowledgments}
-[Author acknowledgments, funding statements, DAWN JWST Archive / SDSS / Euclid archive acknowledgments, and data-availability identifiers to be inserted by the authors prior to submission.]
+The author is grateful to his parents for their constant support. This research received no external grant funding.
+
+Some of the data products presented herein were retrieved from the Dawn JWST Archive (DJA). DJA is an initiative of the Cosmic Dawn Center (DAWN), which is funded by the Danish National Research Foundation under grant DNRF140. This work is based on observations made with the NASA/ESA/CSA James Webb Space Telescope. The reduced spectra used here were retrieved from the DAWN JWST Archive; the underlying JWST observations are archived in the Mikulski Archive for Space Telescopes at the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS5-03127 for JWST. These observations are associated with programs \#1181 (PI D.~J. Eisenstein), \#1210 (PI N. L\"utzgendorf), \#1286 (PI N. L\"utzgendorf), \#1345 (PI S.~L. Finkelstein), \#4106 (PI E. Nelson), \#4233 (PI A. de Graaff), \#5718 (PI D.~D. Kocevski), and \#8047 (PI B. Wang). The author acknowledges the teams of programs \#1345 and \#4233 for developing their observing programs with zero-exclusive-access periods.
+
+Funding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is \url{http://www.sdss.org/}. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions.
+
+The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.
+
+This work has made use of the Euclid DR1 data from the \emph{Euclid} mission of the European Space Agency (ESA), 2026, \url{https://doi.org/10.57780/esa-d079c51}, processed by the \emph{Euclid} Consortium (\url{https://www.euclid-ec.org/}).
+
+Reproduction scripts, derived catalogs, and figure-generation code for this study are archived at \url{https://github.com/NianSi-AI/lrd-balmer-velocity-windows} and on Zenodo at \dataset[doi:10.5281/zenodo.24426322]{https://doi.org/10.5281/zenodo.24426322}.
+
+AI disclosure: Gemini (Google), Claude (Anthropic), Codex (OpenAI), and DeepSeek were used under the author's direction to audit physical and statistical arguments, write and execute analysis and Matplotlib figure-generation code, cross-check literature citations, and refine prose from the author's drafts. All text, numbers, figures, and references were verified by the author, who bears full responsibility for the content.
+
+\section*{Author Contributions}
+H.W. conceived and designed the study, performed the data analysis and modeling, and wrote the manuscript.
 
 \facilities{JWST (NIRSpec), Sloan, Euclid (NISP, VIS)}
 
@@ -424,6 +444,7 @@ $2500$--$3500$ &
 
 \onecolumngrid
 \clearpage
+\raggedbottom
 \twocolumngrid
 \bibliography{references}
 \bibliographystyle{aasjournal}

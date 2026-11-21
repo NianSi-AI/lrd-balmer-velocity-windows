@@ -34,7 +34,7 @@ def main():
         ("figures", []),
     ]:
         subprocess.run([sys.executable, ROOT/"src"/(script+".py"), *arguments], check=True, env=env)
-    for name in ("main.tex","references.bib"):
+    for name in ("main.tex", "references.bib", "Orcid-ID.png"):
         shutil.copyfile(ROOT / "manuscript" / name, build / name)
     if args.pdf:
         subprocess.run(["latexmk","-pdf","-halt-on-error","-interaction=nonstopmode","main.tex"],

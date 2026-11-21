@@ -1,6 +1,6 @@
 # Balmer velocity windows in little red dots
 
-Reproduction package for *Velocity-Window Dependence of the Broad Hα Width–Luminosity Relation in Little Red Dots*. This repository measures how the observed residual scatter in broad Hα finite-window line dispersion at fixed Hα luminosity changes with the velocity window. It also reconstructs the velocity-binned Hβ/Hα ratios of three JWST sources and compares integrated widths in JWST, SDSS, and Euclid.
+Reproduction package for *Velocity-Window Dependence of the Broad Hα Width–Luminosity Relation in Little Red Dots* (Haoyu Wang; archived at Zenodo DOI [`10.5281/zenodo.24426322`](https://doi.org/10.5281/zenodo.24426322)). This repository measures how the observed residual scatter in broad Hα finite-window line dispersion at fixed Hα luminosity changes with the velocity window. It also reconstructs the velocity-binned Hβ/Hα ratios of three JWST sources and compares integrated widths in JWST, SDSS, and Euclid.
 
 ## Run
 
