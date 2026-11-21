@@ -32,13 +32,13 @@ def _ols_ddof1(xs, ys):
 
 
 def build_supplement_values(base_values):
-    """Build versioned supplementary macros from audited Phase 1, Phase 2, and frozen tables."""
+    """Build derived manuscript macros from regenerated tables and survey catalogs."""
     import numpy as np
     supp = {}
 
     def snum(name, value, decimals=3):
         assert name.isascii() and name.isalpha(), f"Invalid macro name: {name}"
-        assert name not in base_values, f"Macro collision with frozen numbers.tex: {name}"
+        assert name not in base_values, f"Macro collision with base values: {name}"
         assert name not in supp, f"Duplicate supplement macro: {name}"
         assert math.isfinite(value), f"Non-finite value for {name}: {value}"
         supp[name] = format(value, f".{decimals}f")
@@ -76,10 +76,10 @@ def build_supplement_values(base_values):
 
     with (DATA / "jwst.csv").open() as f:
         inv_map = {r["dedup_id"]: r for r in csv.DictReader(f)}
-    p1_43 = sum(1 for r in jw_all if inv_map.get(r["dedup_id"], {}).get("in_paper1") == "True")
-    p1_40 = sum(1 for r in jw40 if inv_map.get(r["dedup_id"], {}).get("in_paper1") == "True")
-    p1_22 = sum(1 for r in jw22 if inv_map.get(r["dedup_id"], {}).get("in_paper1") == "True")
-    p1_20 = sum(1 for r in jw20 if inv_map.get(r["dedup_id"], {}).get("in_paper1") == "True")
+    w26_43 = sum(1 for r in jw_all if inv_map.get(r["dedup_id"], {}).get("in_wang26") == "True")
+    w26_40 = sum(1 for r in jw40 if inv_map.get(r["dedup_id"], {}).get("in_wang26") == "True")
+    w26_22 = sum(1 for r in jw22 if inv_map.get(r["dedup_id"], {}).get("in_wang26") == "True")
+    w26_20 = sum(1 for r in jw20 if inv_map.get(r["dedup_id"], {}).get("in_wang26") == "True")
     atlas_40 = sum(
         1 for r in jw40
         if inv_map.get(r["dedup_id"], {}).get("in_yanagisawa26") == "True"
@@ -91,7 +91,7 @@ def build_supplement_values(base_values):
     assert len(hb_ids) == 33
     hb_in_clean = sum(1 for k in hb_ids if k in jw40_ids)
     hb_out_clean = sum(1 for k in hb_ids if k not in jw40_ids)
-    hb_p1 = sum(1 for k in hb_ids if inv_map.get(k, {}).get("in_paper1") == "True")
+    hb_w26 = sum(1 for k in hb_ids if inv_map.get(k, {}).get("in_wang26") == "True")
     hb_z = [float(jw_map[k]["z_fit"]) for k in hb_ids]
 
     jw40_ols = _ols_ddof1([float(r["h"]) for r in jw40], [math.log10(float(r["FWHM_sg_kms"])) for r in jw40])
@@ -101,11 +101,11 @@ def build_supplement_values(base_values):
     jw20_z = [float(r["z_fit"]) for r in jw20]
 
     snum("JWSTGratingParentN", len(jw_all), 0)
-    snum("JWSTGratingParentPaperOneOverlapN", p1_43, 0)
-    snum("JWSTCleanPaperOneOverlapN", p1_40, 0)
+    snum("JWSTGratingParentWangOverlapN", w26_43, 0)
+    snum("JWSTCleanWangOverlapN", w26_40, 0)
     snum("JWSTCleanAtlasProvN", atlas_40, 0)
     snum("JWSTCleanBXProvN", bx_40, 0)
-    snum("JWSTPresetPaperOneOverlapN", p1_20, 0)
+    snum("JWSTPresetWangOverlapN", w26_20, 0)
     snum("JWSTEdgeFallbackN", len(jw22) - len(jw20), 0)
     snum("JWSTOtherCleanN", len(jw40) - len(jw20), 0)
     snum("JWSTPresetZMin", min(jw20_z), 2)
@@ -113,7 +113,7 @@ def build_supplement_values(base_values):
     snum("JWSTPresetZMax", max(jw20_z), 2)
     snum("JWSTTwoLineInCleanN", hb_in_clean, 0)
     snum("JWSTTwoLineOutCleanN", hb_out_clean, 0)
-    snum("JWSTTwoLinePaperOneOverlapN", hb_p1, 0)
+    snum("JWSTTwoLineWangOverlapN", hb_w26, 0)
     snum("JWSTTwoLineZMin", min(hb_z), 2)
     snum("JWSTTwoLineZMax", max(hb_z), 2)
     snum("JWSTCleanZMin", min(jw40_z), 2)
@@ -127,7 +127,7 @@ def build_supplement_values(base_values):
     snum("JWSTCleanLHaMax", jw40_ols["x_max"], 2)
 
     snum("JWSTHighSNRN", len(jw22), 0)
-    snum("JWSTHighSNRPaperOneOverlapN", p1_22, 0)
+    snum("JWSTHighSNRWangOverlapN", w26_22, 0)
     snum("JWSTHighSNRZMin", min(jw22_z), 2)
     snum("JWSTHighSNRZMed", float(np.median(jw22_z)), 2)
     snum("JWSTHighSNRZMax", max(jw22_z), 2)
@@ -308,7 +308,7 @@ def build_supplement_values(base_values):
                 snum(key + "TrueFourFive", float(r["true_s4500_med"]), 4)
                 snum(key + "TrueFull", float(r["true_full_med"]), 4)
 
-    # Primary calibration summary & Stage-1 trial denominators (Appendix Table & text)
+    # Primary calibration summary & recovery trial denominators (Appendix Table & text)
     with (TABLES / "calibration_summary.csv").open() as f:
         cal_map = {(r["group"], int(r["V"]), r["profile"]): r for r in csv.DictReader(f)}
     for grp, gtag in (("JWST", "JWST"), ("SDSS", "SDSS"), ("JWST40", "JWSTForty")):
@@ -351,7 +351,7 @@ def build_supplement_values(base_values):
             snum(f"PT{tag}{ptag}UsablePct", 100.0 * len(ok) / len(sub), 1)
             snum(f"PT{tag}{ptag}ErrSixEight", float(np.percentile(errs, 68)), 2)
 
-    # --- 3. Phase 1 exact pixel-overlap Balmer windows & archived template ratio ---
+    # --- 3. Native pixel-overlap Balmer windows & two-line template ratio ---
     p1_meta = read(DATA / "balmer_sources.json")
     src_tags = {
         "RUBIES-EGS-42046": "SrcFourTwo",
@@ -403,7 +403,7 @@ def build_supplement_values(base_values):
     snum("POneASrcFourTwoThreeTenBlueD", float(modA[("RUBIES-EGS-42046", "core_norm_300_1000", "BLUE")]["D_point_if_Hb_ge_2_pixel_sigma"]), 1)
     snum("POneASrcFourTwoThreeTenRedD", float(modA[("RUBIES-EGS-42046", "core_norm_300_1000", "RED")]["D_point_if_Hb_ge_2_pixel_sigma"]), 1)
 
-    # Archived 33-source / Top-3 / Other-30 template operator ratios
+    # 33-source / Top-3 / Other-30 template operator ratios
     tg = read(TABLES / "template_groups.json")
     for gkey, gtag in (("all33", "AllThirtyThree"), ("top3", "TopThree"), ("other30", "OtherThirty")):
         g = tg[gkey]
@@ -447,8 +447,8 @@ def main():
     # Check all numerical macros used in the paper at its reported precision.
     canonical = "".join(k+"="+values[k]+"\n" for k in sorted(used))
     digest = hashlib.sha256(canonical.encode()).hexdigest()
-    if digest != "a40e7155d26979ec19dd02f5490c744e2558de0617afadfa2ddb3baf3f5b389f":
-        raise ValueError(f"Numerical comparison with manuscript v3.1 failed: {digest}")
+    if digest != "c0d0885d542f19a718f732f322b4978bae07c47fe396f75b32ece9e0493e7ee9":
+        raise ValueError(f"Numerical comparison with manuscript failed: {digest}")
     (ROOT / "build/numbers.tex").write_text("".join(
         "\\newcommand{\\" + k + "}{" + values[k] + "}\n" for k in sorted(used)))
     print(f"{len(used)} manuscript quantities matched at published precision.")
