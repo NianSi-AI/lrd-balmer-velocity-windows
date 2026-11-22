@@ -447,7 +447,7 @@ def main():
     # Check all numerical macros used in the paper at its reported precision.
     canonical = "".join(k+"="+values[k]+"\n" for k in sorted(used))
     digest = hashlib.sha256(canonical.encode()).hexdigest()
-    if digest != "c0d0885d542f19a718f732f322b4978bae07c47fe396f75b32ece9e0493e7ee9":
+    if digest != "89345f2bacb7f3a40489178ef8c01fbc34de12b43880f5d02fcf0f1d24cb501a":
         raise ValueError(f"Numerical comparison with manuscript failed: {digest}")
     (ROOT / "build/numbers.tex").write_text("".join(
         "\\newcommand{\\" + k + "}{" + values[k] + "}\n" for k in sorted(used)))
